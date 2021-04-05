@@ -84,3 +84,10 @@ macro_rules! max_impl {
 max_impl!(u32);
 max_impl!(i32);
 max_impl!(u64);
+
+// adding compile fail as test on doc-tests
+
+/// ```compile_fail
+/// let x: Vec<u32> = vecmac::avec![42; "Supposed-to-fail-no-strings"];
+/// ```
+pub struct CompileFailTest;
