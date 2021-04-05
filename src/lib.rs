@@ -10,14 +10,20 @@ macro_rules! avec {
         vs
     }};
     ($element:expr; $count:expr) => {{
-        let mut vs = Vec::new();
+        let count = $count;
+        let mut vs = Vec::with_capacity($count);
         let x = $element;
-        for _ in 0..$count {
+        for _ in 0..count {
          vs.push(x.clone())
         }
         vs
     }};
 }
+
+// star would mean 0 or more repetitions; rather than plus which is one or more.
+// A bunch of reallocations of a vector if we create a new one and then we push.
+// Reallocating all the elements when we push and increasing the elements in the vector.
+// We could allocate by the number when we know the count.
 
 #[test]
 fn empty_vec() {
