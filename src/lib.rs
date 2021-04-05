@@ -11,8 +11,9 @@ macro_rules! avec {
     }};
     ($element:expr; $count:expr) => {{
         let mut vs = Vec::new();
+        let x = $element;
         for _ in 0..$count {
-         vs.push($element)
+         vs.push(x.clone())
         }
         vs
     }};
@@ -43,6 +44,16 @@ fn double() {
 #[test]
 fn try_count() {
     let x: Vec<u32> = avec![42;2];
+    assert!(!x.is_empty());
+    assert_eq!(x.len(), 2);
+    assert_eq!(x[0], 42);
+    assert_eq!(x[1], 42);
+}
+
+#[test]
+fn try_count_nonliteral() {
+    let mut y = Some(42);
+    let x: Vec<u32> = avec![y.take().unwrap();2];
     assert!(!x.is_empty());
     assert_eq!(x.len(), 2);
     assert_eq!(x[0], 42);
