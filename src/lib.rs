@@ -55,3 +55,5 @@ macro_rules! max_impl {
 }
 
 max_impl!(u32);
+max_impl!(i32);
+max_impl!(u64);
