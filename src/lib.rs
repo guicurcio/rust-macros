@@ -5,17 +5,16 @@ macro_rules! avec {
         Vec::new()
     };
     ($($element:expr),+ $(,)?) => {{
-        let mut vs = Vec::new();
+        // creating an array of expressions.
+        let count = [$($element),*].len();
+        let mut vs = Vec::with_capacity(count);
         $(vs.push($element);)+
         vs
     }};
     ($element:expr; $count:expr) => {{
-        let count = $count;
-        let mut vs = Vec::with_capacity($count);
-        let x = $element;
-        for _ in 0..count {
-         vs.push(x.clone())
-        }
+        let mut vs = Vec::new();
+        // vs.extend(std::iter::repeat($element).take(count));
+        vs.resize($count,$element);
         vs
     }};
 }
@@ -24,6 +23,12 @@ macro_rules! avec {
 // A bunch of reallocations of a vector if we create a new one and then we push.
 // Reallocating all the elements when we push and increasing the elements in the vector.
 // We could allocate by the number when we know the count.
+// Vec::with_capacity($count);
+// ...
+// vs.extend(std::iter::repeat($element).take(count));
+// or
+// vs.resize(count,$element);
+// We need to get the count for the naive implementation without count; that is, without a second argument.
 
 #[test]
 fn empty_vec() {
