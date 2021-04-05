@@ -4,9 +4,9 @@ macro_rules! avec {
     () => {
         Vec::new()
     };
-    ($($element:expr),+) => {{
+    ($($element:expr),+ $(,)?) => {{
         let mut vs = Vec::new();
-        $(vs.push($element);)*
+        $(vs.push($element);)+
         vs
     }};
 }
@@ -31,4 +31,10 @@ fn double() {
     assert_eq!(x.len(), 2);
     assert_eq!(x[0], 42);
     assert_eq!(x[1], 43);
+}
+
+// Trailing commas. (comma separated was.)
+#[test]
+fn trailing() {
+    let _: Vec<u32> = avec![1, 2, 4, 5, 6, 7, 8, 9,];
 }
