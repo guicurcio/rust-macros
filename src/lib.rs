@@ -1,10 +1,13 @@
 // This is valid syntax going in; a valid rust program going out.
 macro_rules! dec {
-    ($arg1:ty => $arg2:ident) => {
-        type $arg2 = $arg1;
+    ($x:ident) => {
+        $x += 1;
     };
 }
 
-dec!(
-    u32 => alsou32
-);
+#[test]
+fn foo() {
+    let mut x = 42;
+    dec!(x);
+    assert_eq!(x, 43);
+}
