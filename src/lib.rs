@@ -38,3 +38,20 @@ fn double() {
 fn trailing() {
     let _: Vec<u32> = avec![1, 2, 4, 5, 6, 7, 8, 9,];
 }
+
+trait MaxValue {
+    fn max_value() -> Self;
+}
+
+#[macro_export]
+macro_rules! max_impl {
+    ($t:ty) => {
+        impl $crate::MaxValue for $t {
+            fn max_value() -> Self {
+                <$t>::MAX
+            }
+        }
+    };
+}
+
+max_impl!(u32);
