@@ -7,8 +7,7 @@ macro_rules! avec {
     ($($element:expr),+ $(,)?) => {{
         // creating an array of expressions.
         // evaluating expressions multiple times.
-        let count = [$($element),*].len();
-        let mut vs = Vec::with_capacity(count);
+        let mut vs = Vec::with_capacity($crate::avec![@COUNT; $($element),*]);
         $(vs.push($element);)+
         vs
     }};
@@ -18,6 +17,20 @@ macro_rules! avec {
         vs.resize($count,$element);
         vs
     }};
+    // internal use.
+    (@COUNT; $($element:expr),*) => {
+        [$($crate::avec![@SUBST; $element]),*].len();
+    };
+
+    (@SUBST; $_element:expr) => {()}
+    // we could make this unit just to get the length. ??
+    // The macro would not know how many times to repeat, though.
+    // we can by a trick and without calling the expression all the time. Evaluating the expression as by how many expressions there actually are.
+    // type is inferred without hacks. (which we would have to if it not <[()]>)
+    // Given an array of units, it's evaluated at compile time and we get the length.
+    // sizeof could also be used.
+    // we can check that it's constant by const _: usize = ...
+    // we can abstract the count as well.
 }
 
 // star would mean 0 or more repetitions; rather than plus which is one or more.
