@@ -9,6 +9,13 @@ macro_rules! avec {
         $(vs.push($element);)+
         vs
     }};
+    ($element:expr; $count:expr) => {{
+        let mut vs = Vec::new();
+        for _ in 0..$count {
+         vs.push($element)
+        }
+        vs
+    }};
 }
 
 #[test]
@@ -31,6 +38,15 @@ fn double() {
     assert_eq!(x.len(), 2);
     assert_eq!(x[0], 42);
     assert_eq!(x[1], 43);
+}
+
+#[test]
+fn try_count() {
+    let x: Vec<u32> = avec![42;2];
+    assert!(!x.is_empty());
+    assert_eq!(x.len(), 2);
+    assert_eq!(x[0], 42);
+    assert_eq!(x[1], 42);
 }
 
 // Trailing commas. (comma separated was.)
