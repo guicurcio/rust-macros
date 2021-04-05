@@ -6,6 +6,7 @@ macro_rules! avec {
     };
     ($($element:expr),+ $(,)?) => {{
         // creating an array of expressions.
+        // evaluating expressions multiple times.
         let count = [$($element),*].len();
         let mut vs = Vec::with_capacity(count);
         $(vs.push($element);)+
