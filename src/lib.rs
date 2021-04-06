@@ -43,6 +43,7 @@ macro_rules! avec {
 // or
 // vs.resize(count,$element);
 // We need to get the count for the naive implementation without count; that is, without a second argument.
+// we could use the box keyword with an array of slices.
 
 #[test]
 fn empty_vec() {
